@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Water Supply Request</title>
+    <link rel="stylesheet" href="alert.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+            background-color: #f0eae1; /* Fallback background color */
+            background-image: url('https://media.istockphoto.com/id/870380888/photo/paddy-field-closeup.jpg?s=612x612&w=0&k=20&c=BvgzuPttv04cBtJLszL5U3hqtxsG_IicBhLhnTcr6b8='); /* Background image */
+            background-size: cover;
+            background-position: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        
+        .container {
+            text-align: center;
+            color: black; /* Text color */
+            background-color: rgb(253, 251, 251);
+            opacity: 0.8;
+            padding:20px;
+            border-radius: 10px;;
+        }
+        
+        h1 {
+            font-size: 36px;
+            margin-bottom: 20px;
+        }
+        
+        p {
+            font-size: 18px;
+            margin-bottom: 20px;
+        }
+        
+        button {
+            padding: 12px 24px;
+            font-size: 18px;
+            background-color: #4caf50; /* Green color */
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+        
+        button:hover {
+            background-color: #45a049; /* Darker green on hover */
+        }
+        
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Request Additional Water Supply</h1>
+        <p>Press the button below to request additional water supply.</p>
+        <button id="emailButton">Request Water</button>
+    </div>
+
+    <script>
+        // Function to send email when the button is clicked
+        document.getElementById("emailButton").addEventListener("click", function() {
+          // Define sender, recipient, subject, and message
+          var sender_email = "oceanly204@gmail.com";
+          var sender_password = "lyihkkozuiqofazp";
+          var recipient_email = "sathvika1064@gmail.com";
+          var subject = "Emergency Alert";
+          var message = "Water Needed Release water to my house as  soon as possible";
+          
+          // Send a request to the Flask server to trigger the send_email function
+          fetch('/send_email', {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              sender_email: sender_email,
+              sender_password: sender_password,
+              recipient_email: recipient_email,
+              subject: subject,
+              message: message
+            })
+          })
+          .then(response => response.json())
+          .then(data => {
+            console.log(data.message);
+            alert(data.message);
+          })
+          .catch(error => {
+            console.error('Error:', error);
+            alert('Error sending email');
+          });
+        });
+      </script> 
+</body>
+</html>
